@@ -62,8 +62,8 @@ const Register = () => {
   return (
     <div className="formContainer">
       <div className="formWrapper">
-        <span className="logo">Lama Chat</span>
-        <span className="title">Register</span>
+        <span className="logo">FCFM TEAMS</span>
+        <span className="title">Registrar</span>
         <form onSubmit={handleSubmit}>
           <input required type="text" placeholder="display name" />
           <input required type="email" placeholder="email" />
@@ -71,11 +71,11 @@ const Register = () => {
           <input required style={{ display: "none" }} type="file" id="file" />
           <label htmlFor="file">
             <img src={Add} alt="" />
-            <span>Add an avatar</span>
+            <span>Agregar un avatar</span>
           </label>
-          <button disabled={loading}>Sign up</button>
+          <button disabled={loading}>Registrarse</button>
           {loading && "Uploading and compressing the image please wait..."}
-          {err && <span>Something went wrong</span>}
+          {err && <span>Algo salio mal</span>}
         </form>
         <p>
           You do have an account? <Link to="/register">Login</Link>
