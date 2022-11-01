@@ -23,14 +23,14 @@ const Login = () => {
     <div className="formContainer">
       <div className="formWrapper">
         <span className="logo">FCFM TEAMS</span>
-        <span className="title">Login</span>
+        <span className="title">Inicio de sesión</span>
         <form onSubmit={handleSubmit}>
-          <input type="email" placeholder="email" />
-          <input type="password" placeholder="password" />
+          <input type="email" placeholder="Correo Electrónico" />
+          <input type="password" placeholder="Contraseña" />
           <button>Ingresar</button>
           {err && <span>Algo salio mal</span>}
         </form>
-        <p>No tienes cuenta? <Link to="/Registrarse">Registrar</Link></p>
+        <p>¿Aún no tienes cuenta? <Link to="/Registrarse">Registrar</Link></p>
       </div>
     </div>
   );
