@@ -65,9 +65,9 @@ const Register = () => {
         <span className="logo">FCFM TEAMS</span>
         <span className="title">Registrar</span>
         <form onSubmit={handleSubmit}>
-          <input required type="text" placeholder="display name" />
-          <input required type="email" placeholder="email" />
-          <input required type="password" placeholder="password" />
+          <input required type="text" placeholder="Nombre de usuario" />
+          <input required type="email" placeholder="Correo Electronico" />
+          <input required type="password" placeholder="Contraseña" />
           <input required style={{ display: "none" }} type="file" id="file" />
           <label htmlFor="file">
             <img src={Add} alt="" />
@@ -78,7 +78,7 @@ const Register = () => {
           {err && <span>Algo salio mal</span>}
         </form>
         <p>
-          You do have an account? <Link to="/register">Login</Link>
+          ¿Ya tienes una cuenta? <Link to="/Login">Inicia Sesión</Link>
         </p>
       </div>
     </div>

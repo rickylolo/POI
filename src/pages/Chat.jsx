@@ -1,6 +1,6 @@
 import React from 'react'
-import Sidebar from '../components/Sidebar'
-import Chats from '../components/Chat'
+import Sidebar from '../Components/Sidebar'
+import Chats from '../Components/Chat'
 
 const Chat = () => {
   return (
