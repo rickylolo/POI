@@ -56,14 +56,14 @@ const Input = () => {
       });
     }
 
-    await updateDoc(doc(db, "userChats", currentUser.uid), {
+    await updateDoc(doc(db, "ChatsUsuarios", currentUser.uid), {
       [data.chatId + ".lastMessage"]: {
         text,
       },
       [data.chatId + ".date"]: serverTimestamp(),
     });
 
-    await updateDoc(doc(db, "userChats", data.user.uid), {
+    await updateDoc(doc(db, "ChatsUsuarios", data.user.uid), {
       [data.chatId + ".lastMessage"]: {
         text,
       },
@@ -77,7 +77,7 @@ const Input = () => {
     <div className="input">
       <input
         type="text"
-        placeholder="Type something..."
+        placeholder="Escribe algo..."
         onChange={(e) => setText(e.target.value)}
         value={text}
       />
@@ -92,7 +92,7 @@ const Input = () => {
         <label htmlFor="file">
           <img src={Img} alt="" />
         </label>
-        <button onClick={handleSend}>Send</button>
+        <button onClick={handleSend}>Enviar</button>
       </div>
     </div>
   );
