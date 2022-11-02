@@ -74,7 +74,7 @@ const Register = () => {
             <span>Agregar un avatar</span>
           </label>
           <button disabled={loading}>Registrarse</button>
-          {loading && "Uploading and compressing the image please wait..."}
+          {loading && "Subiendo imagen espere un momento..."}
           {err && <span>Algo salio mal</span>}
         </form>
         <p>

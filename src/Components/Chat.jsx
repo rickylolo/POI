@@ -22,7 +22,9 @@ import { AuthContext } from "../context/AuthContext";
 const Chat = () => {
   const { data } = useContext(ChatContext);
   const [show,setShow] = useState(false)
+  const [showChatName,setShowChatName] = useState(false)
   const [username, setUsernameChat2] = useState("");
+  const [chat, setChatName] = useState("");
   const [user, setUserChatAdd] = useState(null);
   const [userTeammate, setUserChat] = useState(null);
   const [err, setErrChat] = useState(false);
@@ -51,14 +53,13 @@ const Chat = () => {
 
   
   const handleSelect2 = async () => {
-    
     const q2 = query(
       collection(db, "Usuarios"),
-      where("displayName", "==", data.user.displayName)
+      where("displayName", "==", data.user?.displayName)
     );
     try {
-      const querySnapshot = await getDocs(q2);
-      querySnapshot.forEach((doc) => {
+      const querySnapshot2 = await getDocs(q2);
+      querySnapshot2.forEach((doc) => {
         setUserChat(doc.data());
       });
     } catch (err) {
@@ -66,37 +67,45 @@ const Chat = () => {
     }
 
     //check whether the group(chats in firestore) exists, if not create
-    const combinedId = user.uid + currentUser.uid + userTeammate.uid;
+    if(user == null || userTeammate == null || currentUser == null){
+      alert("No se puede crear un grupo de menos de 3 personas");
+      return;
+    }
+
+    const combinedId = chat;
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
 
       if (!res.exists()) {
         //create a chat in chats collection
-        await setDoc(doc(db, "chats", combinedId), { messages: [] });
+        await setDoc(doc(db, "chats", combinedId), {
+           messages: [] 
+          }
+           );
 
         //create user chats
-        await updateDoc(doc(db, "ChatsUsuarios", currentUser.uid), {
-          [combinedId + ".userInfo"]: {
-            uid: user.uid,
-            displayName: user.displayName,
-            photoURL: user.photoURL,
-          },
-          [combinedId + ".date"]: serverTimestamp(),
-        });
-
-        await updateDoc(doc(db, "ChatsUsuarios", user.uid), {
+        await updateDoc(doc(db, "chatsGrupales", currentUser.uid), {
           [combinedId + ".userInfo"]: {
             uid: currentUser.uid,
-            displayName: currentUser.displayName,
+            displayName: chat,
             photoURL: currentUser.photoURL,
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
+
+        await updateDoc(doc(db, "chatsGrupales", user.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: user.uid,
+            displayName: chat,
+            photoURL: user.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
         
-        await updateDoc(doc(db, "ChatsUsuarios", userTeammate.uid), {
+        await updateDoc(doc(db, "chatsGrupales", userTeammate.uid), {
           [combinedId + ".userInfo"]: {
             uid: userTeammate.uid,
-            displayName: userTeammate.displayName,
+            displayName: chat,
             photoURL: userTeammate.photoURL,
           },
           [combinedId + ".date"]: serverTimestamp(),
@@ -105,6 +114,7 @@ const Chat = () => {
     } catch (err) {}
 
     setUserChatAdd(null);
+    setUserChat(null);
     setUsernameChat2("")
   };
   return (
@@ -126,9 +136,19 @@ const Chat = () => {
           value={username}
         />
       </div>
+      
+      <div className="searchForm">
+        <input
+          type="text"
+          placeholder="Nombre del chat"
+          onChange={(e) => setChatName(e.target.value)}
+          value={chat}
+        />
+        <button onClick={handleSelect2}>Aceptar</button>
+      </div>
       {err && <span>Usuario no encontrado</span>}
       {user && (
-        <div className="userChat" onClick={handleSelect2}>
+        <div className="userChat" onClick={()=>{setShowChatName(!showChatName);}}>
           <img src={user.photoURL} alt="" />
           <div className="userChatInfo">
             <span>{user.displayName}</span>

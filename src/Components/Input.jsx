@@ -69,6 +69,15 @@ const Input = () => {
       },
       [data.chatId + ".date"]: serverTimestamp(),
     });
+    
+/*   
+    await updateDoc(doc(db, "chatsGroupales"), {
+      [data.chatId + ".lastMessage"]: {
+        text,
+      },
+      [data.chatId + ".date"]: serverTimestamp(),
+    }); */
+
 
     setText("");
     setImg(null);
